@@ -1,0 +1,29 @@
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2008
+
+Project("{205834CC-70FE-9441-7FA9-DC85171F6B81}") = "Muntz", "Assembly-CSharp.csproj", "{E556DE4F-5C03-2659-B3A4-5FEEE1ECBB14}"
+EndProject
+Project("{205834CC-70FE-9441-7FA9-DC85171F6B81}") = "Muntz", "Assembly-CSharp-Editor-firstpass.csproj", "{9FA7EFBD-0BA4-8F12-3F90-4BABB5B464F1}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E556DE4F-5C03-2659-B3A4-5FEEE1ECBB14}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E556DE4F-5C03-2659-B3A4-5FEEE1ECBB14}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E556DE4F-5C03-2659-B3A4-5FEEE1ECBB14}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E556DE4F-5C03-2659-B3A4-5FEEE1ECBB14}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9FA7EFBD-0BA4-8F12-3F90-4BABB5B464F1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9FA7EFBD-0BA4-8F12-3F90-4BABB5B464F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9FA7EFBD-0BA4-8F12-3F90-4BABB5B464F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9FA7EFBD-0BA4-8F12-3F90-4BABB5B464F1}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = Assembly-CSharp.csproj
+	EndGlobalSection
+EndGlobal
