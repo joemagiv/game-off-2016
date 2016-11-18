@@ -66,7 +66,7 @@ public class Plug : MonoBehaviour {
 		//disableConnectors();
 		isPowered = false;
 		if (socketCollider != null){
-			socketCollider.enabled = true;
+			//	socketCollider.enabled = true;
 			if (isLongBlock){
 				if (secondSocketCollider != null){
 					secondSocketCollider.enabled = true;
@@ -92,7 +92,8 @@ public class Plug : MonoBehaviour {
 		if (isOverSocket){
 			Debug.Log ("Attempting to place");
 			transform.position = currentSocket.transform.position;
-			socketCollider.enabled = false;
+			//socketCollider.enabled = false;
+			transform.parent = currentSocket.transform;
 			isPlaced = true;
 			Invoke ("CheckConnectors", 0.25f);
 			

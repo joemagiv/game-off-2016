@@ -34,28 +34,33 @@ public class GameController : MonoBehaviour {
 	
 	public void PowerDownDownstreamPlugs(Plug severedPlug){
 		if (severedPlug.nextPlug != null){
-		bool lastPlug = false;
+			bool lastPlug = false;
+			int breakPoint = 0;
 		Plug nextPlug = severedPlug.nextPlug;
-		while (!lastPlug){
-			Debug.Log ("Looping at " + nextPlug.name);
-			if(nextPlug.nextPlug == null){
-				lastPlug = true;
-			} 
-				nextPlug.previousPlug = null;
-				nextPlug.connector1.IsTouchingPower = false;
-				Debug.Log ("Powering Down " + nextPlug.name);
-				nextPlug.isPowered = false;
-				nextPlug = nextPlug.nextPlug;
+			while (!lastPlug||breakPoint<20){
+				breakPoint++;
+				Debug.Log ("Looping at " + nextPlug.name);
+				if(nextPlug.nextPlug == null){
+					lastPlug = true;
+				} 
+					nextPlug.previousPlug = null;
+					nextPlug.connector1.IsTouchingPower = false;
+					Debug.Log ("Powering Down " + nextPlug.name);
+					nextPlug.isPowered = false;
+					nextPlug = nextPlug.nextPlug;
+				Debug.Log ("Breakpoint Reached");
 				
-			}
+				}
 		}
 	}
 	
 	public void PowerUpDownStreamPlugs(Plug reconnectedPlug){
 		if(reconnectedPlug.nextPlug!= null){
 			bool lastPlug = false;
+			int breakPoint =0;
 			Plug nextPlug = reconnectedPlug.nextPlug;
-			while (!lastPlug){
+			while (!lastPlug||breakPoint<20){
+				breakPoint++;
 				Debug.Log ("Looping at " + nextPlug.name);
 				if(nextPlug.nextPlug == null){
 					lastPlug = true;
@@ -67,7 +72,11 @@ public class GameController : MonoBehaviour {
 				nextPlug.isPowered = true;
 				nextPlug = nextPlug.nextPlug;
 				
+				if (breakPoint == 20){
+					Debug.Log ("Breakpoint Reached");
 				}
+			}
+			
 			}
 		}
 
