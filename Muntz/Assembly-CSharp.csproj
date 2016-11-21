@@ -46,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Connector.cs" />
+     <Compile Include="Assets\EndBlock.cs" />
      <Compile Include="Assets\GameController.cs" />
      <Compile Include="Assets\GridManager.cs" />
      <Compile Include="Assets\Plug.cs" />

@@ -68,6 +68,8 @@ public class Plug : MonoBehaviour {
 		connector1.connectingPlug = null;
 //		connector2.connectingPlug = null;
 		previousPlug = null;
+		gameController.PowerDownDownstreamPlugs(this);
+		
 		
 		previousLocation = transform.position;
 		//disableConnectors();
@@ -99,18 +101,16 @@ public class Plug : MonoBehaviour {
 		if (isOverSocket){
 			Debug.Log ("Attempting to place");
 			transform.position = currentSocket.transform.position;
-			//socketCollider.enabled = false;
 			transform.parent = currentSocket.transform;
 			isPlaced = true;
-			Invoke ("CheckConnectors", 0.25f);
+			Invoke ("CheckConnectors", 0.15f);
 			
 
-		} else {
-			transform.position = previousLocation;
+			} else {
+				transform.position = previousLocation;
 		}
-		
 		isDragging = false;
-		//enableConnectors();
+		gameController.CountActivePieces();
 		
 	}
 	
@@ -138,22 +138,6 @@ public class Plug : MonoBehaviour {
 		}
 	}
 	
-	
-	//public bool checkPowered(){
-	//	if (isPowered){
-	//		return true;
-	//	} else {
-	//		return false;
-	//	}
-	//}
-	
-	//public bool checkPlaced(){
-	//	if (isPlaced){
-	//		return true;
-	//	} else {
-	//		return false;
-	//	}
-	//}
 	
 	void OnTriggerEnter2D(Collider2D other){
 		//		Debug.Log ("Detected a Trigger: " + other);

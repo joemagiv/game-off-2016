@@ -9,6 +9,10 @@ public class GameController : MonoBehaviour {
 	private int pieceCount;
 	public Text pieceCountText;
 	
+	public int moveCount;
+	public Text moveCountText;
+	
+	public float levelTime;
 	
 	public bool circuitComplete;
 	
@@ -18,20 +22,23 @@ public class GameController : MonoBehaviour {
 	void Start () {
 		dataText.text = "Test";
 		plugs = FindObjectsOfType<Plug>();
+		Invoke("CountActivePieces", 0.75f);
 		
 	}
 	
-	public void CircuitComplete(){
-		circuitComplete = true;
-		dataText.text =  "Circuit Complete!";
-	}
-	
-	public void CircuitBroke(){
-		circuitComplete = false;
-		dataText.text = "Circuit is broken";
-	}
+
 	
 	public void CountActivePieces(){
+		int activePieces = 0;
+		if(circuitComplete){
+			Plug[] plugs = FindObjectsOfType<Plug>();
+			foreach (Plug activePlug in plugs){
+				if(activePlug.isPowered){
+					activePieces++;
+				}
+			}
+		}
+		pieceCountText.text = "Components: " + activePieces.ToString();
 		
 	}
 	
@@ -92,59 +99,17 @@ public class GameController : MonoBehaviour {
 	}
 	
 	
-	//public void PowerDownDownstreamPlugs(Plug severedPlug){
-	//	if (severedPlug.nextPlug != null){
-	//		bool lastPlug = false;
-			
-	//		//Plug nextPlug = severedPlug.nextPlug;
-	//		//while (!lastPlug||breakPoint<20){
-	//		foreach (Plug thisPlug in plugs){
-	//			if(thisPlug.isPlaced){
-	//				Debug.Log ("Looping at " + thisPlug.name);
-	//				if(thisPlug.nextPlug == null){
-	//					lastPlug = true;
-	//				} 
-	//				thisPlug.previousPlug = null;
-	//				thisPlug.connector1.IsTouchingPower = false;
-	//				Debug.Log ("Powering Down " + thisPlug.name);
-	//				thisPlug.isPowered = false;
-	//				//thisPlug = thisPlug.nextPlug;
-	//			}
-				
-	//		}
-	//	}
-	//}
 
-
-	
-	//public void PowerUpDownStreamPlugs(Plug reconnectedPlug){
-	//	if(reconnectedPlug.nextPlug!= null){
-	//		bool lastPlug = false;
-	//		int breakPoint =0;
-	//		Plug nextPlug = reconnectedPlug.nextPlug;
-	//		foreach (Plug thisPlug in plugs){
-				
-				
-	//			if(thisPlug.isPlaced){
-					
-	//				Debug.Log ("Looping at " + thisPlug.name + " Breakpoint at " + breakPoint );
-	//				if(nextPlug.nextPlug == null){
-	//					lastPlug = true;
-	//				} 
-	//				thisPlug.previousPlug = reconnectedPlug;
-	//				thisPlug.connector2.IsTouchingPower = true;
-	//				Debug.Log ("Powering Up " + thisPlug.name);
-					
-	//					thisPlug.isPowered = true;
-	//				}
-	//			}
-	//		}
-	//	}
 
 	
 	
 	// Update is called once per frame
 	void Update () {
-	
+		if (circuitComplete){
+			dataText.text = "Circuit Complete";
+		} else {
+			dataText.text = "Circuit InComplete"; 
+		}
+		CountActivePieces();
 	}
 }

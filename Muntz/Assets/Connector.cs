@@ -70,11 +70,7 @@ public class Connector : MonoBehaviour {
 				parentPlug.isPowered = true;
 				IsTouchingPower = true;
 			}
-			if (other.tag == "End"){
-				if (parentPlug.isPowered){
-					gameController.CircuitComplete();
-				}
-			}
+
 			
 		}
 	}
@@ -89,13 +85,7 @@ public class Connector : MonoBehaviour {
 			parentPlug.isPowered = false;
 			IsTouchingPower = false;
 		}
-		if (other.tag == "End"){
-			if (parentPlug.isPowered){
-				gameController.CircuitBroke();
-				parentPlug.isPowered = false;
-				IsTouchingPower = false;
-			}
-		} 
+
 		//if (other.GetComponentInParent<Connector>()){
 		//	if (IsTouchingPower){
 		//		parentPlug.isPowered = false;
@@ -119,5 +109,10 @@ public class Connector : MonoBehaviour {
 		//if (IsTouchingPower){
 		//	parentPlug.isPowered = true;
 		//}
+		if(parentPlug.isPowered){
+			ParentHasPower = true;
+		} else {
+			ParentHasPower = false;
+		}
 	}
 }
