@@ -52,6 +52,7 @@ public class Connector : MonoBehaviour {
 		if (parentPlug.isPlaced){
 			if (other.GetComponent<Connector>()){
 				connectingPlug = other.GetComponentInParent<Plug>();
+
 				//Connector otherConnector = other.GetComponent<Connector>();
 				//if (otherConnector.ParentHasPower){
 				//		Debug.Log(other.name + " is powered, powering" + parentPlug.name);

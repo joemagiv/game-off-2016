@@ -39,6 +39,13 @@ public class Plug : MonoBehaviour {
 		connectors = GetComponentsInChildren<Connector>();
 		spriteRenderer = GetComponentInChildren<SpriteRenderer>();
 		gameController = FindObjectOfType<GameController>().GetComponent<GameController>();
+		
+		if (isPlaced){
+			Socket tempSocket;
+			tempSocket = GetComponentInParent<Socket>();
+			currentSocket = tempSocket.gameObject;
+			Invoke("CheckConnectors",0.25f);
+		}
 	}
 	
 	private void disableConnectors(){
@@ -107,7 +114,7 @@ public class Plug : MonoBehaviour {
 		
 	}
 	
-	void CheckConnectors(){
+	public void CheckConnectors(){
 		Debug.Log("Checking connectors for " + transform.name);
 		if (connector1.connectingPlug != null){
 			previousPlug = connector1.connectingPlug;
@@ -116,6 +123,8 @@ public class Plug : MonoBehaviour {
 				isPowered = true;
 			}
 			
+		} else {
+			previousPlug = null;
 		}
 		if (connector2.connectingPlug != null){
 			nextPlug = connector2.connectingPlug;
@@ -124,6 +133,8 @@ public class Plug : MonoBehaviour {
 			} else {
 				gameController.PowerDownDownstreamPlugs(this);
 			}
+		} else {
+			nextPlug = null;
 		}
 	}
 	
@@ -181,7 +192,6 @@ public class Plug : MonoBehaviour {
 	}
 	
 	
-	
 	// Update is called once per frame
 	void Update () {
 		if (isPowered){
@@ -194,25 +204,28 @@ public class Plug : MonoBehaviour {
 			
 		}
 		if (isDragging){
-			if(Input.GetButtonDown("Jump")){
+			if(Input.GetButtonDown("Jump")||Input.GetKeyDown(KeyCode.LeftShift)){
 					transform.Rotate(0,0,90);
-					float currentRotation = transform.rotation.z;
-					Debug.Log("Current rotation is " + currentRotation);
-				if (isLBlock){
-					if(currentRotation == 1||currentRotation==0){
-					Debug.Log ("Flipping connectors");	
-					Connector tempConnector = connector2;
-					connector2 = connector1;
-					connector1 = tempConnector;
-					}
-				}
-				else {
-						Connector tempConnector = connector2;
-						connector2 = connector1;
-						connector1 = tempConnector;
-					}
-				}
+				//float currentRotation = transform.localRotation.z;
+				//	Debug.Log("Current rotation is " + currentRotation);
+				//if (isLBlock){
+				//	if(currentRotation == 1||currentRotation==0){
+				//	Debug.Log ("Flipping connectors");	
+				//	Connector tempConnector = connector2;
+				//	connector2 = connector1;
+				//	connector1 = tempConnector;
+				//	}
+				//}
+				//else {
+				//		Connector tempConnector = connector2;
+				//		connector2 = connector1;
+				//		connector1 = tempConnector;
+				//	}
+				//}
 			}
+		}
+
+	
 
 		
 		//if (isPlaced){
