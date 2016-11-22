@@ -32,6 +32,9 @@ public class Plug : MonoBehaviour {
 	public Connector connector1;
 	public Connector connector2;
 	
+	private BoxCollider2D connector1boxCollider;
+	private BoxCollider2D connector2boxCollider;
+	
 	public int countOfColliders = 0;
 
 	// Use this for initialization
@@ -39,12 +42,14 @@ public class Plug : MonoBehaviour {
 		connectors = GetComponentsInChildren<Connector>();
 		spriteRenderer = GetComponentInChildren<SpriteRenderer>();
 		gameController = FindObjectOfType<GameController>().GetComponent<GameController>();
+		connector1boxCollider = connector1.GetComponent<BoxCollider2D>();
+		connector2boxCollider = connector2.GetComponent<BoxCollider2D>();
 		
 		if (isPlaced){
 			Socket tempSocket;
 			tempSocket = GetComponentInParent<Socket>();
 			currentSocket = tempSocket.gameObject;
-			Invoke("CheckConnectors",0.25f);
+			Invoke("CheckConnectors",0.15f);
 		}
 	}
 	
@@ -61,14 +66,15 @@ public class Plug : MonoBehaviour {
 	}
 	
 	public void MouseDown(){
+		
 		isPlaced = false;
-		isPowered = false;
 		connector1.IsTouchingPower = false;
 		connector2.IsTouchingPower = false;
 		connector1.connectingPlug = null;
 //		connector2.connectingPlug = null;
 		previousPlug = null;
 		gameController.PowerDownDownstreamPlugs(this);
+		
 		
 		
 		previousLocation = transform.position;
@@ -82,11 +88,18 @@ public class Plug : MonoBehaviour {
 				}
 			}
 		}
+		
+		connector1boxCollider.enabled = false;
+		connector2boxCollider.enabled = false;
 	}
 	
 	public void MouseDrag(){
+		if (nextPlug!= null){
+			nextPlug = null;
+		}
 		// isPowered = false;
 		isDragging = true;
+
 		
 		
 		transform.position = Input.mousePosition;
@@ -98,13 +111,16 @@ public class Plug : MonoBehaviour {
 	}
 	
 	public void MouseUp(){
+		connector1boxCollider.enabled = true;
+		connector2boxCollider.enabled = true;
 		if (isOverSocket){
 			Debug.Log ("Attempting to place");
 			transform.position = currentSocket.transform.position;
 			transform.parent = currentSocket.transform;
 			isPlaced = true;
+			gameController.CheckAllConnectors();
 			Invoke ("CheckConnectors", 0.15f);
-			
+			gameController.moveCount = gameController.moveCount + 1;
 
 			} else {
 				transform.position = previousLocation;
@@ -114,27 +130,51 @@ public class Plug : MonoBehaviour {
 		
 	}
 	
-	public void CheckConnectors(){
-		Debug.Log("Checking connectors for " + transform.name);
-		if (connector1.connectingPlug != null){
-			previousPlug = connector1.connectingPlug;
-			connector1.connectingPlug.nextPlug = this;
-			if (previousPlug.isPowered){
-				isPowered = true;
-			}
+	public void CheckPreviousAndNextConnectors(){
+		if(!isDragging){
+			if (connector1.connectingPlug != null){
+				previousPlug = connector1.connectingPlug;
+				connector1.connectingPlug.nextPlug = this;
+				}
+				
+			 else {
+				previousPlug = null;
+			 }
 			
-		} else {
-			previousPlug = null;
-		}
-		if (connector2.connectingPlug != null){
-			nextPlug = connector2.connectingPlug;
-			if (isPowered){
-				gameController.PowerUpDownStreamPlugs(this);
+			
+			if (connector2.connectingPlug != null){
+				nextPlug = connector2.connectingPlug;
 			} else {
-				gameController.PowerDownDownstreamPlugs(this);
+				nextPlug = null;
 			}
-		} else {
-			nextPlug = null;
+		}
+		
+	}
+	
+	public void CheckConnectors(){
+
+		if(!isDragging){
+			Debug.Log("Checking connectors for " + transform.name);
+			if (connector1.connectingPlug != null){
+				previousPlug = connector1.connectingPlug;
+				connector1.connectingPlug.nextPlug = this;
+				if (previousPlug.isPowered){
+					isPowered = true;
+				}
+				
+			} else {
+				previousPlug = null;
+			}
+			if (connector2.connectingPlug != null){
+				nextPlug = connector2.connectingPlug;
+				if (isPowered){
+					gameController.PowerUpDownStreamPlugs(this);
+				} else {
+					gameController.PowerDownDownstreamPlugs(this);
+				}
+			} else {
+				nextPlug = null;
+			}
 		}
 	}
 	
@@ -178,6 +218,7 @@ public class Plug : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		
 		if (isPowered){
 			spriteRenderer.color = Color.yellow;
 			foreach (Connector connector in connectors){

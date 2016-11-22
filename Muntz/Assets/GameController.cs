@@ -6,25 +6,40 @@ public class GameController : MonoBehaviour {
 	
 	public Text dataText;
 	
+	//Pieces
 	private int pieceCount;
 	public Text pieceCountText;
 	
+	//Moves
 	public int moveCount;
 	public Text moveCountText;
 	
+	//Timer
+	public bool levelStarted = false;
+	public float startingTime;
 	public float levelTime;
+	public Text timerText;
+	
 	
 	public bool circuitComplete;
+	
 	
 	private Plug[] plugs;
 	
 	// Use this for initialization
 	void Start () {
 		dataText.text = "Test";
+		levelTime = startingTime;
 		plugs = FindObjectsOfType<Plug>();
 		Invoke("CountActivePieces", 0.75f);
+		Invoke("StartLevel", 2f);
 		
 	}
+	
+	void StartLevel(){
+		levelStarted = true;
+	}
+	
 	
 
 	
@@ -42,39 +57,53 @@ public class GameController : MonoBehaviour {
 		
 	}
 	
+	public void CheckAllConnectors(){
+		foreach (Plug currentPlug in plugs){
+			currentPlug.CheckPreviousAndNextConnectors();
+		}
+	}
+	
+	
 	public void PowerDownDownstreamPlugs(Plug severedPlug){
 		if (severedPlug.nextPlug != null){
 			bool lastPlug = false;
 			int breakPoint = 20;
-			Plug nextPlug = severedPlug.nextPlug;
+			Plug currentLoopPlug = severedPlug.nextPlug;
 			while (!lastPlug){
 				breakPoint--;
+				currentLoopPlug.previousPlug = null;
+
+				
 				if (breakPoint <= 0 ){
 					Debug.Log ("Breakpoint Reached");
 					break;
 				}
 				//				Debug.Log ("Looping at " + nextPlug.name);
-				if(nextPlug.nextPlug == null){
+				if(currentLoopPlug.nextPlug == null){
 					lastPlug = true;
 					
 				} 
-				nextPlug.previousPlug = null;
-				nextPlug.connector1.IsTouchingPower = false;
-				Debug.Log ("Powering Down " + nextPlug.name);
-				nextPlug.isPowered = false;
-				nextPlug = nextPlug.nextPlug;
-
+				
+				currentLoopPlug.connector1.IsTouchingPower = false;
+				Debug.Log ("Powering Down " + currentLoopPlug.name);
+				currentLoopPlug.isPowered = false;
+				Plug previousLoopPlug = currentLoopPlug;
+				currentLoopPlug = currentLoopPlug.nextPlug;
+				previousLoopPlug.nextPlug = null;
 				
 			}
 			severedPlug.connector2.connectingPlug = null;
 		}
+		
+		//CheckAllConnectors();
 	}
 	
 	public void PowerUpDownStreamPlugs(Plug reconnectedPlug){
+		CheckAllConnectors();
 		if(reconnectedPlug.nextPlug!= null){
 			bool lastPlug = false;
 			int breakPoint = 20;
-			Plug nextPlug = reconnectedPlug.nextPlug;
+			Plug currentLoopPlug = reconnectedPlug.nextPlug;
 			while (!lastPlug){
 				breakPoint--;
 				if (breakPoint <= 0 ){
@@ -82,20 +111,21 @@ public class GameController : MonoBehaviour {
 					break;
 				}
 				//				Debug.Log ("Looping at " + nextPlug.name);
-				if(nextPlug.nextPlug == null){
+				if(currentLoopPlug.nextPlug == null){
 					lastPlug = true;
 				} 
-				nextPlug.previousPlug = reconnectedPlug;
-				nextPlug.connector2.IsTouchingPower = true;
-				Debug.Log ("Powering Up " + nextPlug.name);
+				currentLoopPlug.previousPlug = reconnectedPlug;
+				currentLoopPlug.connector2.IsTouchingPower = true;
+				Debug.Log ("Powering Up " + currentLoopPlug.name);
 				
-				nextPlug.isPowered = true;
-				nextPlug = nextPlug.nextPlug;
+				currentLoopPlug.isPowered = true;
+				currentLoopPlug = currentLoopPlug.nextPlug;
 				
 
 			}
 			
 		}
+		
 	}
 	
 	
@@ -111,5 +141,14 @@ public class GameController : MonoBehaviour {
 			dataText.text = "Circuit InComplete"; 
 		}
 		CountActivePieces();
+		
+		if (levelStarted){
+			levelTime = levelTime - Time.deltaTime;
+			timerText.text = "Time: " + levelTime.ToString("#");
+		} else {
+			timerText.text = "";
+		}
+		
+		moveCountText.text = "Moves: " + moveCount.ToString();
 	}
 }
