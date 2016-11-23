@@ -220,7 +220,7 @@ public class Plug : MonoBehaviour {
 	void Update () {
 		
 		if (isPowered){
-			spriteRenderer.color = Color.yellow;
+			spriteRenderer.color = Color.white;
 			foreach (Connector connector in connectors){
 				connector.ParentHasPower = true;
 			}
