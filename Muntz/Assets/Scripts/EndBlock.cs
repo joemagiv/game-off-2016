@@ -4,11 +4,13 @@ using System.Collections;
 public class EndBlock : MonoBehaviour {
 	
 	private GameController gameController;
+	private SpriteRenderer spriteRenderer;
 	
 	
 	// Use this for initialization
 	void Start () {
 		gameController = FindObjectOfType<GameController>().GetComponent<GameController>();
+		spriteRenderer = GetComponentInChildren<SpriteRenderer>();
 	}
 	
 	void OnTriggerStay2D(Collider2D other){
@@ -32,6 +34,12 @@ public class EndBlock : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
+		if (gameController.circuitComplete){
+			spriteRenderer.color = Color.white;
+			
+		} else {
+			spriteRenderer.color = Color.red;
+			
+		}
 	}
 }

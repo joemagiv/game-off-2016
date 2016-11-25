@@ -20,6 +20,14 @@ public class GameController : MonoBehaviour {
 	public float levelTime;
 	public Text timerText;
 	
+	//Submission button
+	public Button submitButton;
+	
+	//EndofGame
+	public Animator scoreScreenAnimator;
+	public Text scoreText;
+	
+	
 	
 	public bool circuitComplete;
 	
@@ -55,6 +63,19 @@ public class GameController : MonoBehaviour {
 		}
 		pieceCountText.text = "Components: " + activePieces.ToString();
 		
+	}
+	
+	public int ReturnActivePieces(){
+		int activePieces = 0;
+		if(circuitComplete){
+			Plug[] plugs = FindObjectsOfType<Plug>();
+			foreach (Plug activePlug in plugs){
+				if(activePlug.isPowered){
+					activePieces++;
+				}
+			}
+		}
+		return activePieces;
 	}
 	
 	public void CheckAllConnectors(){
@@ -128,8 +149,39 @@ public class GameController : MonoBehaviour {
 		
 	}
 	
+	public void callScoreScreen(){
+		levelStarted = false;
+		scoreText.text = "";
+		scoreScreenAnimator.SetBool("OnScreen", true);
+		scoreText.text = "Time: " + levelTime.ToString("#");
+		Invoke("AddComponentScore", 1.5f);
+		
+	}
 	
-
+	private void AddComponentScore(){
+		scoreText.text = "Time: " + levelTime.ToString("#") + "\n - Comp: " + ReturnActivePieces().ToString() + " x2";
+		Invoke("AddMovesScore", 1.5f);
+	}
+	
+	private void AddMovesScore(){
+		scoreText.text = "Time: " + levelTime.ToString("#") + "\n - Comp: " + ReturnActivePieces().ToString() + " x2" +
+			"\n - Moves: " + moveCount.ToString();
+		Invoke("TotalScore", 1.5f);
+		
+		
+	}
+	
+	private void TotalScore(){
+		int endScore = Mathf.FloorToInt(levelTime) - (ReturnActivePieces()*2) - moveCount;
+		Debug.Log("Endscore is" + endScore);
+		scoreText.text = "Time: " + levelTime.ToString("#") + "\n - Comp: " + ReturnActivePieces().ToString() + " x2" +
+			"\n - Moves: " + moveCount.ToString() + "\n Score: " + endScore.ToString();
+		
+	}
+	
+	private void EnableNextLevel(){
+		
+	}
 
 	
 	
@@ -137,8 +189,10 @@ public class GameController : MonoBehaviour {
 	void Update () {
 		if (circuitComplete){
 			dataText.text = "Circuit Complete";
+			submitButton.interactable = true;
 		} else {
 			dataText.text = "Circuit InComplete"; 
+			submitButton.interactable = false;
 		}
 		CountActivePieces();
 		
