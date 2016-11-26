@@ -46,9 +46,11 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Scripts\Connector.cs" />
+     <Compile Include="Assets\Scripts\DraggingPlug.cs" />
      <Compile Include="Assets\Scripts\EndBlock.cs" />
      <Compile Include="Assets\Scripts\GameController.cs" />
      <Compile Include="Assets\Scripts\GridManager.cs" />
+     <Compile Include="Assets\Scripts\LongBlock.cs" />
      <Compile Include="Assets\Scripts\Plug.cs" />
      <Compile Include="Assets\Scripts\Socket.cs" />
      <Compile Include="Assets\Scripts\StartBlock.cs" />

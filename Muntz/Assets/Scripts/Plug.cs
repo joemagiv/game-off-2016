@@ -35,7 +35,11 @@ public class Plug : MonoBehaviour {
 	private BoxCollider2D connector1boxCollider;
 	private BoxCollider2D connector2boxCollider;
 	
+	private DraggingPlug draggingPlug;
+	
 	public int countOfColliders = 0;
+	
+	private LongBlock longBlock;
 
 	// Use this for initialization
 	void Start () {
@@ -45,12 +49,20 @@ public class Plug : MonoBehaviour {
 		connector1boxCollider = connector1.GetComponent<BoxCollider2D>();
 		connector2boxCollider = connector2.GetComponent<BoxCollider2D>();
 		
+		draggingPlug = FindObjectOfType<DraggingPlug>().GetComponent<DraggingPlug>();
+		
 		if (isPlaced){
 			Socket tempSocket;
 			tempSocket = GetComponentInParent<Socket>();
 			currentSocket = tempSocket.gameObject;
 			Invoke("CheckConnectors",0.15f);
 		}
+		
+		if (isLongBlock){
+			longBlock = GetComponentInChildren<LongBlock>();
+		}
+		
+		
 	}
 	
 	private void disableConnectors(){
@@ -74,6 +86,7 @@ public class Plug : MonoBehaviour {
 //		connector2.connectingPlug = null;
 		previousPlug = null;
 		gameController.PowerDownDownstreamPlugs(this);
+		transform.parent = draggingPlug.transform;
 		
 		
 		
@@ -83,6 +96,8 @@ public class Plug : MonoBehaviour {
 		if (socketCollider != null){
 			//	socketCollider.enabled = true;
 			if (isLongBlock){
+				longBlock.ClearList();
+				
 				if (secondSocketCollider != null){
 					secondSocketCollider.enabled = true;
 				}
@@ -114,13 +129,35 @@ public class Plug : MonoBehaviour {
 		connector1boxCollider.enabled = true;
 		connector2boxCollider.enabled = true;
 		if (isOverSocket){
+			
 			Debug.Log ("Attempting to place");
-			transform.position = currentSocket.transform.position;
-			transform.parent = currentSocket.transform;
-			isPlaced = true;
-			gameController.CheckAllConnectors();
-			Invoke ("CheckConnectors", 0.15f);
-			gameController.moveCount = gameController.moveCount + 1;
+			
+			if(isLongBlock){
+				if (longBlock.socketList.Count < 2){
+					transform.position = previousLocation;
+				} else {
+					transform.position = longBlock.CheckHigherLowerSocket().transform.position;
+					transform.parent = currentSocket.transform;
+					isPlaced = true;
+					gameController.CheckAllConnectors();
+					CheckConnectors();
+					
+					
+					//Invoke ("CheckConnectors", 0.15f);
+					gameController.moveCount = gameController.moveCount + 1;
+					}
+				}
+			 
+			
+			else{
+				transform.position = currentSocket.transform.position;
+				transform.parent = currentSocket.transform;
+				isPlaced = true;
+				gameController.CheckAllConnectors();
+				Invoke ("CheckConnectors", 0.15f);
+					gameController.moveCount = gameController.moveCount + 1;
+				}
+			
 
 			} else {
 				transform.position = previousLocation;

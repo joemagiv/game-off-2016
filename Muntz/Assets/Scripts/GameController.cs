@@ -160,7 +160,7 @@ public class GameController : MonoBehaviour {
 	
 	private void AddComponentScore(){
 		scoreText.text = "Time: " + levelTime.ToString("#") + "\n - Comp: " + ReturnActivePieces().ToString() + " x2";
-		Invoke("AddMovesScore", 1.5f);
+		Invoke("TotalScore", 1.5f);
 	}
 	
 	private void AddMovesScore(){
@@ -172,10 +172,10 @@ public class GameController : MonoBehaviour {
 	}
 	
 	private void TotalScore(){
-		int endScore = Mathf.FloorToInt(levelTime) - (ReturnActivePieces()*2) - moveCount;
+		int endScore = Mathf.FloorToInt(levelTime) - (ReturnActivePieces()*2);
 		Debug.Log("Endscore is" + endScore);
 		scoreText.text = "Time: " + levelTime.ToString("#") + "\n - Comp: " + ReturnActivePieces().ToString() + " x2" +
-			"\n - Moves: " + moveCount.ToString() + "\n Score: " + endScore.ToString();
+		 "\n Score: " + endScore.ToString();
 		
 	}
 	
@@ -203,6 +203,6 @@ public class GameController : MonoBehaviour {
 			timerText.text = "";
 		}
 		
-		moveCountText.text = "Moves: " + moveCount.ToString();
+		//moveCountText.text = "Moves: " + moveCount.ToString();
 	}
 }
