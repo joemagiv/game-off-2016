@@ -40,6 +40,7 @@ public class Plug : MonoBehaviour {
 	public int countOfColliders = 0;
 	
 	private LongBlock longBlock;
+	private SFXManager sfxManager;
 
 	// Use this for initialization
 	void Start () {
@@ -48,6 +49,7 @@ public class Plug : MonoBehaviour {
 		gameController = FindObjectOfType<GameController>().GetComponent<GameController>();
 		connector1boxCollider = connector1.GetComponent<BoxCollider2D>();
 		connector2boxCollider = connector2.GetComponent<BoxCollider2D>();
+		sfxManager = FindObjectOfType<SFXManager>().GetComponent<SFXManager>();
 		
 		draggingPlug = FindObjectOfType<DraggingPlug>().GetComponent<DraggingPlug>();
 		
@@ -87,7 +89,7 @@ public class Plug : MonoBehaviour {
 		previousPlug = null;
 		gameController.PowerDownDownstreamPlugs(this);
 		transform.parent = draggingPlug.transform;
-		
+		sfxManager.PlaySocketGrabSFX();
 		
 		
 		previousLocation = transform.position;
@@ -163,6 +165,8 @@ public class Plug : MonoBehaviour {
 				transform.position = previousLocation;
 		}
 		isDragging = false;
+		sfxManager.PlaySocketPlaceSFX();
+		
 		gameController.CountActivePieces();
 		
 	}
@@ -269,7 +273,7 @@ public class Plug : MonoBehaviour {
 			if(Input.GetButtonDown("Jump")||Input.GetKeyDown(KeyCode.LeftShift)){
 					transform.Rotate(0,0,90);
 				//float currentRotation = transform.localRotation.z;
-				//	Debug.Log("Current rotation is " + currentRotation);
+				Debug.Log("Current rotation is " + transform.localRotation);
 				//if (isLBlock){
 				//	if(currentRotation == 1||currentRotation==0){
 				//	Debug.Log ("Flipping connectors");	

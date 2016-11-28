@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour {
 	
@@ -27,9 +28,10 @@ public class GameController : MonoBehaviour {
 	public Animator scoreScreenAnimator;
 	public Text scoreText;
 	
-	
+	public Button nextLevelButton;
 	
 	public bool circuitComplete;
+	
 	
 	
 	private Plug[] plugs;
@@ -39,6 +41,7 @@ public class GameController : MonoBehaviour {
 		dataText.text = "Test";
 		levelTime = startingTime;
 		plugs = FindObjectsOfType<Plug>();
+		nextLevelButton.interactable = false;
 		Invoke("CountActivePieces", 0.75f);
 		Invoke("StartLevel", 2f);
 		
@@ -47,7 +50,6 @@ public class GameController : MonoBehaviour {
 	void StartLevel(){
 		levelStarted = true;
 	}
-	
 	
 
 	
@@ -177,10 +179,17 @@ public class GameController : MonoBehaviour {
 		scoreText.text = "Time: " + levelTime.ToString("#") + "\n - Comp: " + ReturnActivePieces().ToString() + " x2" +
 		 "\n Score: " + endScore.ToString();
 		
+		Invoke("EnableNextLevel", 1.5f);
+		
 	}
 	
 	private void EnableNextLevel(){
-		
+		nextLevelButton.interactable = true;
+	}
+	
+	public void LoadNextLevel(){
+		Scene scene = SceneManager.GetActiveScene();
+		SceneManager.LoadScene(scene.buildIndex+1);
 	}
 
 	

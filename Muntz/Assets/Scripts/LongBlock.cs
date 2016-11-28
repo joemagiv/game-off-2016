@@ -40,28 +40,60 @@ public class LongBlock : MonoBehaviour {
 	
 	public GameObject CheckHigherLowerSocket(){
 		//first check on x axis
-		if(socketList[0].transform.position.x < socketList[1].transform.position.x){
-			//is it further to the left
-			return socketList[0].gameObject;
-		} else {
-			if (socketList[0].transform.position.x == socketList[1].transform.position.x){
-				//is it the same? then check y
-				
-				if (socketList[0].transform.position.y > socketList[1].transform.position.y){
-					//is it the higher one?
-					return socketList[0].gameObject;
-					
+		float currentRotation = parentPlug.transform.rotation.w;
+		if(currentRotation==1f||currentRotation==-0.7f){
+			if(socketList[0].transform.position.x < socketList[1].transform.position.x){
+				//is it further to the left
+				return socketList[0].gameObject;
 				} else {
-					//if it's not grab the other one
+						if (socketList[0].transform.position.x == socketList[1].transform.position.x){
+							//is it the same? then check y
+							
+							if (socketList[0].transform.position.y > socketList[1].transform.position.y){
+								//is it the higher one?
+								return socketList[0].gameObject;
+								
+							} else {
+								//if it's not grab the other one
+								return socketList[1].gameObject;
+							}
+				
+					}
+				
+				
+			
+				else {
+					//if it's not further left and not the same it must be the other one
 					return socketList[1].gameObject;
 				}
-	
-			} 
-			
-			else {
-				//if it's not further left and not the same it must be the other one
-				return socketList[1].gameObject;
 			}
+		} else {
+			if(socketList[0].transform.position.x > socketList[1].transform.position.x){
+				//is it further to the left
+				return socketList[0].gameObject;
+			} else {
+				if (socketList[0].transform.position.x == socketList[1].transform.position.x){
+							//is it the same? then check y
+					
+					if (socketList[0].transform.position.y < socketList[1].transform.position.y){
+								//is it the higher one?
+						return socketList[0].gameObject;
+						
+					} else {
+								//if it's not grab the other one
+						return socketList[1].gameObject;
+					}
+					
+				}
+				
+				
+				
+				else {
+					//if it's not further left and not the same it must be the other one
+					return socketList[1].gameObject;
+				}
+			}
+			
 		}
 		
 		
