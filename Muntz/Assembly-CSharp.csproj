@@ -58,6 +58,7 @@
      <Compile Include="Assets\Scripts\Socket.cs" />
      <Compile Include="Assets\Scripts\StartBlock.cs" />
      <Compile Include="Assets\TVScreen.cs" />
+     <Compile Include="Assets\Typewriter.cs" />
      <None Include="Assets\Plugins\Editor\ScriptInspector3\CodeSnippets\namespace.txt" />
      <None Include="Assets\Plugins\Editor\ScriptInspector3\SI Changes.txt" />
      <None Include="Assets\Plugins\Editor\ScriptInspector3\CodeSnippets\log.txt" />
