@@ -38,17 +38,22 @@ public class GameController : MonoBehaviour {
 	
 	// Use this for initialization
 	void Start () {
-		dataText.text = "Test";
+		submitButton.gameObject.SetActive(false);
+		pieceCountText.text = "";
+		dataText.text = "";
 		levelTime = startingTime;
 		plugs = FindObjectsOfType<Plug>();
 		nextLevelButton.interactable = false;
-		Invoke("CountActivePieces", 0.75f);
-		Invoke("StartLevel", 2f);
+		//Invoke("CountActivePieces", 0.75f);
+		Invoke("StartLevel", 8f);
 		
 	}
 	
 	void StartLevel(){
+		CountActivePieces();
 		levelStarted = true;
+		submitButton.gameObject.SetActive(true);
+		
 	}
 	
 
@@ -196,18 +201,19 @@ public class GameController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (circuitComplete){
-			dataText.text = "Circuit Complete";
-			submitButton.interactable = true;
-		} else {
-			dataText.text = "Circuit InComplete"; 
-			submitButton.interactable = false;
-		}
-		CountActivePieces();
+
 		
 		if (levelStarted){
 			levelTime = levelTime - Time.deltaTime;
 			timerText.text = "Time: " + levelTime.ToString("#");
+			if (circuitComplete){
+				dataText.text = "Circuit Complete";
+				submitButton.interactable = true;
+			} else {
+				dataText.text = "Circuit InComplete"; 
+				submitButton.interactable = false;
+			}
+			CountActivePieces();
 		} else {
 			timerText.text = "";
 		}

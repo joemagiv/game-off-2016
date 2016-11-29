@@ -273,7 +273,7 @@ public class Plug : MonoBehaviour {
 			if(Input.GetButtonDown("Jump")||Input.GetKeyDown(KeyCode.LeftShift)){
 					transform.Rotate(0,0,90);
 				//float currentRotation = transform.localRotation.z;
-				Debug.Log("Current rotation is " + transform.localRotation);
+				Debug.Log("Current rotation is " + transform.localRotation.w);
 				//if (isLBlock){
 				//	if(currentRotation == 1||currentRotation==0){
 				//	Debug.Log ("Flipping connectors");	

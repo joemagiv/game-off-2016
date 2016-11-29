@@ -40,8 +40,16 @@ public class LongBlock : MonoBehaviour {
 	
 	public GameObject CheckHigherLowerSocket(){
 		//first check on x axis
-		float currentRotation = parentPlug.transform.rotation.w;
-		if(currentRotation==1f||currentRotation==-0.7f){
+		float currentRotation = parentPlug.transform.rotation.z;
+		Debug.Log("currentRotation in LongBlock script is " + currentRotation);
+		if(currentRotation==1f||currentRotation<-0.6f){
+			Debug.Log("in the 1f or 0.6f thing");
+			if(currentRotation<-0.6f){
+				Debug.Log("Detected a -0.7 rotation");
+			} else {
+				Debug.Log("Not detecting, rotation is " + currentRotation);
+				
+			}
 			if(socketList[0].transform.position.x < socketList[1].transform.position.x){
 				//is it further to the left
 				return socketList[0].gameObject;
@@ -68,9 +76,11 @@ public class LongBlock : MonoBehaviour {
 				}
 			}
 		} else {
+			Debug.Log("Not detecting, rotation is " + currentRotation);
+			
 			if(socketList[0].transform.position.x > socketList[1].transform.position.x){
 				//is it further to the left
-				return socketList[0].gameObject;
+				return socketList[1].gameObject;
 			} else {
 				if (socketList[0].transform.position.x == socketList[1].transform.position.x){
 							//is it the same? then check y
@@ -90,7 +100,7 @@ public class LongBlock : MonoBehaviour {
 				
 				else {
 					//if it's not further left and not the same it must be the other one
-					return socketList[1].gameObject;
+					return socketList[0].gameObject;
 				}
 			}
 			
