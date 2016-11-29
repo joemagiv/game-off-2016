@@ -42,17 +42,17 @@ public class LongBlock : MonoBehaviour {
 		//first check on x axis
 		float currentRotation = parentPlug.transform.rotation.z;
 		Debug.Log("currentRotation in LongBlock script is " + currentRotation);
-		if(currentRotation==1f||currentRotation<-0.6f){
+		if(currentRotation==1||currentRotation<-0.6f){
 			Debug.Log("in the 1f or 0.6f thing");
 			if(currentRotation<-0.6f){
 				Debug.Log("Detected a -0.7 rotation");
 			} else {
-				Debug.Log("Not detecting, rotation is " + currentRotation);
+				Debug.Log("Not detecting, maybe 0 rotation is " + currentRotation);
 				
 			}
 			if(socketList[0].transform.position.x < socketList[1].transform.position.x){
 				//is it further to the left
-				return socketList[0].gameObject;
+				return socketList[1].gameObject;
 				} else {
 						if (socketList[0].transform.position.x == socketList[1].transform.position.x){
 							//is it the same? then check y

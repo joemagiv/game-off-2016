@@ -29,9 +29,11 @@ public class GameController : MonoBehaviour {
 	public Text scoreText;
 	
 	public Button nextLevelButton;
+	public Button restartLevelButton;
 	
 	public bool circuitComplete;
 	
+	private bool gameOverTriggered = false;
 	
 	
 	private Plug[] plugs;
@@ -39,6 +41,7 @@ public class GameController : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		submitButton.gameObject.SetActive(false);
+		restartLevelButton.gameObject.SetActive(false);
 		pieceCountText.text = "";
 		dataText.text = "";
 		levelTime = startingTime;
@@ -196,8 +199,20 @@ public class GameController : MonoBehaviour {
 		Scene scene = SceneManager.GetActiveScene();
 		SceneManager.LoadScene(scene.buildIndex+1);
 	}
-
 	
+	public void restartCurrentScene()
+	{
+		int scene = SceneManager.GetActiveScene().buildIndex;
+		SceneManager.LoadScene(scene, LoadSceneMode.Single);
+	}
+	
+	private void GameOver(){
+		levelStarted = false;
+		scoreText.text = "You ran out of time!";
+		scoreScreenAnimator.SetBool("OnScreen", true);
+		restartLevelButton.gameObject.SetActive(true);
+	}
+
 	
 	// Update is called once per frame
 	void Update () {
@@ -216,6 +231,12 @@ public class GameController : MonoBehaviour {
 			CountActivePieces();
 		} else {
 			timerText.text = "";
+		}
+		
+		if(levelTime<0){
+			if(!gameOverTriggered){
+				GameOver();
+			}
 		}
 		
 		//moveCountText.text = "Moves: " + moveCount.ToString();
