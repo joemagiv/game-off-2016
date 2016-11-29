@@ -142,10 +142,10 @@ public class Plug : MonoBehaviour {
 					transform.parent = currentSocket.transform;
 					isPlaced = true;
 					gameController.CheckAllConnectors();
-					CheckConnectors();
+					//CheckConnectors();
 					
 					
-					//Invoke ("CheckConnectors", 0.15f);
+					Invoke ("CheckConnectors", 0.15f);
 					gameController.moveCount = gameController.moveCount + 1;
 					}
 				}

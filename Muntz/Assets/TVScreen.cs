@@ -14,7 +14,7 @@ public class TVScreen : MonoBehaviour {
 	
 	public void UpdateLevelText(){
 		Scene scene = SceneManager.GetActiveScene();
-		levelTextMesh.text = "Level " + (scene.buildIndex + 1).ToString();
+		levelTextMesh.text = "Level " + (scene.buildIndex).ToString();
 	}
 	
 	// Update is called once per frame
