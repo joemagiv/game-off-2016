@@ -23,7 +23,7 @@ public class Typewriter : MonoBehaviour {
 	 "A self-taught electrical engineer he would tear apart a set until it stopped working and would then replace the last piece before it broke.", 
 	 "Through this process (which would later be known as 'Muntzing') he discovered many components of modern sets were unnecessary.", 
 	 "He then began selling his stripped down 'Muntz TVs' for less than $100, a fraction of the cost of mainstream competitors.",
-	 "Incidentally, he coined the term 'TV' because 'Television' would not fit on a airplane banner.",
+	 "Incidentally, he coined and popularized the term 'TV'. Primarily because 'Television' would not fit on a airplane banner.",
 	 "This new affordability helped increase the widespread adoption of TV across America, and the rest is broadcast history..." };
 	 int currentlyDisplayingText = 0;
  

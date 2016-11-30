@@ -80,7 +80,7 @@ public class Plug : MonoBehaviour {
 	}
 	
 	public void MouseDown(){
-		
+		spriteRenderer.sortingOrder = 1;
 		isPlaced = false;
 		connector1.IsTouchingPower = false;
 		connector2.IsTouchingPower = false;
@@ -128,6 +128,8 @@ public class Plug : MonoBehaviour {
 	}
 	
 	public void MouseUp(){
+		spriteRenderer.sortingOrder = 0;
+		
 		connector1boxCollider.enabled = true;
 		connector2boxCollider.enabled = true;
 		if (isOverSocket){
@@ -259,6 +261,12 @@ public class Plug : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		//if (isLongBlock){
+		//	if(longBlock = null){
+		//		longBlock = GetComponentInChildren<LongBlock>();
+		//	}
+		//}
+		
 		
 		if (isPowered){
 			spriteRenderer.color = Color.white;

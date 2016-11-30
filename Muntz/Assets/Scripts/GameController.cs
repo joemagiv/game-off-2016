@@ -8,8 +8,9 @@ public class GameController : MonoBehaviour {
 	public Text dataText;
 	
 	//Pieces
-	private int pieceCount;
+	public int pieceCount;
 	public Text pieceCountText;
+	public int originalLevelPieceCount;
 	
 	//Moves
 	public int moveCount;
@@ -35,6 +36,10 @@ public class GameController : MonoBehaviour {
 	
 	private bool gameOverTriggered = false;
 	
+	//AudioCues
+	private SFXManager sfxManager;
+	public AudioClip winningSound;
+	public AudioClip losingSound;
 	
 	private Plug[] plugs;
 	
@@ -42,6 +47,7 @@ public class GameController : MonoBehaviour {
 	void Start () {
 		submitButton.gameObject.SetActive(false);
 		restartLevelButton.gameObject.SetActive(false);
+		sfxManager = FindObjectOfType<SFXManager>().GetComponent<SFXManager>();
 		pieceCountText.text = "";
 		dataText.text = "";
 		levelTime = startingTime;
@@ -164,6 +170,8 @@ public class GameController : MonoBehaviour {
 		scoreText.text = "";
 		scoreScreenAnimator.SetBool("OnScreen", true);
 		scoreText.text = "Time: " + levelTime.ToString("#");
+		sfxManager.PlaySFX(winningSound);
+		
 		Invoke("AddComponentScore", 1.5f);
 		
 	}
@@ -211,6 +219,7 @@ public class GameController : MonoBehaviour {
 		scoreText.text = "You ran out of time!";
 		scoreScreenAnimator.SetBool("OnScreen", true);
 		restartLevelButton.gameObject.SetActive(true);
+		sfxManager.PlaySFX(losingSound);
 	}
 
 	
@@ -223,7 +232,11 @@ public class GameController : MonoBehaviour {
 			timerText.text = "Time: " + levelTime.ToString("#");
 			if (circuitComplete){
 				dataText.text = "Circuit Complete";
-				submitButton.interactable = true;
+				if(ReturnActivePieces() < originalLevelPieceCount){
+					submitButton.interactable = true;
+				} else {
+					submitButton.interactable = false;
+				}
 			} else {
 				dataText.text = "Circuit InComplete"; 
 				submitButton.interactable = false;
@@ -236,6 +249,7 @@ public class GameController : MonoBehaviour {
 		if(levelTime<0){
 			if(!gameOverTriggered){
 				GameOver();
+				gameOverTriggered = true;
 			}
 		}
 		
