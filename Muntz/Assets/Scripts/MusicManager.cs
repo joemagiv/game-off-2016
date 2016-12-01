@@ -20,7 +20,7 @@ public class MusicManager : MonoBehaviour {
 		audioSource.clip = mainGameMusic;
 		audioSource.volume = 0.75f;
 		audioSource.Play();
-		
+		audioSource.loop = true;
 	}
 	
 	void Awake() {

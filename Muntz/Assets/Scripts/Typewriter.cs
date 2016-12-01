@@ -19,12 +19,12 @@ public class Typewriter : MonoBehaviour {
 	
 	
      //Store all your text in this string array
-	private string[] goatText = new string[]{"In 1949 used car salesman Earl 'Madman' Muntz became fascinated with television sets.",
-	 "A self-taught electrical engineer he would tear apart a set until it stopped working and would then replace the last piece before it broke.", 
-	 "Through this process (which would later be known as 'Muntzing') he discovered many components of modern sets were unnecessary.", 
-	 "He then began selling his stripped down 'Muntz TVs' for less than $100, a fraction of the cost of mainstream competitors.",
-	 "Incidentally, he coined and popularized the term 'TV'. Primarily because 'Television' would not fit on a airplane banner.",
-	 "This new affordability helped increase the widespread adoption of TV across America, and the rest is broadcast history..." };
+	private string[] goatText = new string[]{"In 1949 used car salesman Earl \"Madman\" Muntz became fascinated with television sets.",
+	 "A self-taught electrical engineer, he would tear apart a set until it stopped working, then replace the last piece he took out before it broke.", 
+	 "Through this process -- which would come to be known as \"Muntzing\" -- he discovered many components of modern sets were unnecessary.", 
+	 "He began selling his stripped-down \"Muntz TVs\" for less than $100 -- a fraction of the cost of mainstream competitors.",
+	 "Incidentally, he coined and popularized the term \"TV.\" The word \"television\" was too long to fit on an airplane banner.",
+	 "This new affordability helped increase the widespread adoption of TV across America. The rest is broadcast history..."  };
 	 int currentlyDisplayingText = 0;
  
 	 void Start() {
@@ -77,7 +77,7 @@ public class Typewriter : MonoBehaviour {
 	void PretitlePause(){
 		tvAnimator.SetTrigger("TVquickFuzz");
 		textBox.text = "";
-		Invoke("TitleDisplay",2.7f);
+		Invoke("TitleDisplay",2.5f);
 		
 	}
 	
