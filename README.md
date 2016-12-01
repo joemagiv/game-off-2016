@@ -5,6 +5,7 @@
 --Submission for Github Game Off 2016--
 
 Game can be played in browser here: https://joemag.itch.io/muntz
+
 Github Repo is here: https://github.com/joemagiv/game-off-2016
 
 
@@ -17,7 +18,7 @@ Originally a used car salesman (his prices were so low he was a madman) he turne
 Muntz takes its namesake's lead and presents you with an overly complex circuit of components, you must figure out which pieces are unnecessary and simplify the circuit.Try things out, rip it apart, put it back together!
 
 
-Go forth and *Muntz*!
+Go forth and **Muntz**!
 
 
 ![GameScreenShot01](http://i.imgur.com/6yAIRGA.png)
